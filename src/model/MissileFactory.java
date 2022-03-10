@@ -71,10 +71,6 @@ public class MissileFactory  {
             return ballisticMissile;
         }
     }
-    public void productCost(Rocket rocket){
-
-    }
-
 
     //thêm , sửa ...
 }

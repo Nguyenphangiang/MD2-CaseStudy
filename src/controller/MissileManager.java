@@ -5,9 +5,11 @@ import storage.IMissileData;
 import storage.MissileData;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MissileManager  {
-
+    public static final int MISSILE_SPEED = 20;
+    private LandManager landManager = new LandManager();
     private MissileLaunchers missileLaunchers = new MissileLaunchers();
     public static IMissileData missileData = new MissileData();
     public static ArrayList<Rocket> rocketList = MissileData.saveFile;
@@ -63,21 +65,26 @@ public class MissileManager  {
                 int missilePosition = getMissilePosition(rocketList,name);
                 if (rocketList.get(missilePosition).getQuantity() ==1){
                     rocketList.remove(missilePosition);
+                    missileFly();
                     missileLaunchers.launch();
                     try {
                         missileData.writeFile(rocketList);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    target();
                 } else {
                     int afterLaunch = rocketList.get(missilePosition).getQuantity() -1;
                     rocketList.get(missilePosition).setQuantity(afterLaunch);
+                    missileFly();
+
                     missileLaunchers.launch();
                     try {
                         missileData.writeFile(rocketList);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    target();
                 }
             } else
                 System.out.println("Không có tên lửa đó.");
@@ -95,6 +102,46 @@ public class MissileManager  {
         System.out.println("...OKE !!!");
         missileLaunchers.clean();
     }
+    public void missileFly(){
+        int runDistance = 0;
+        while (runDistance < Land.DISTANCE){
+            int speed = MISSILE_SPEED;
+            runDistance += speed;
+            String land ="|";
+            int percentTravel = (runDistance * 100)/Land.DISTANCE;
+            for (int i = 0; i < Land.DISTANCE;i += Land.STEP){
+                if (percentTravel >= i + Land.STEP){
+                    land += "~";
+                } else if (percentTravel >= i && percentTravel < i + Land.STEP){
+                    land += ">O>";
+                }else {
+                    land += "_";
+                }
+            }
+            land += "|";
+            System.out.println(land);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                System.err.println("Missile Broken !!!");
+            }
+        }System.out.println("-------KABOOM !!! -------");
+    }
+    public void target(){
+        int target = (new Random()).nextInt(2);
+        if (target == 0){
+           landManager.land.addNew(landManager.humanLand);
+           landManager.land.notification("<HUMAN LAND>");
+
+           landManager.land.remove(landManager.humanLand);
+        } else {
+            landManager.land.addNew(landManager.monsterLand);
+            landManager.land.notification("<MONSTER LAND>");
+            landManager.land.remove(landManager.monsterLand);
+        }
+    }
+
+
     private boolean isNameMissile(String name,ArrayList<Rocket> rockets){
         for (int i = 0; i < rockets.size(); i++) {
             if (rockets.get(i).getName().equals(name)){
@@ -129,4 +176,6 @@ public class MissileManager  {
             }
         }return check;
     }
+
+
 }

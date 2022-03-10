@@ -55,7 +55,7 @@ public class Client {
                     break;
                 case 3:
                     Scanner sc1 = new Scanner(System.in);
-                    System.out.println("Chọn tên lửa muốn phóng.\n3-1.TM-1.\n3-2.TM-2.\n3-3.BM-1.\n3-4.BM-23.");
+                    System.out.println("Chọn tên lửa muốn phóng.\n3-1.TM-1.\n3-2.TM-2.\n3-3.BM-1.\n3-4.BM-2.");
                     int missileLaunch = sc1.nextInt();
                     switch (missileLaunch){
                         case 1:
@@ -80,8 +80,5 @@ public class Client {
                     break;
             }
         } while (choice != 0);
-
-
-
     }
 }

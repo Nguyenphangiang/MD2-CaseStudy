@@ -1,17 +1,17 @@
 package model;
 
-public class HumanLand extends Land {
-    private int health = super.getHealth();
+public class HumanLand extends Land implements ObserverLand{
+    private int health = 1000;
+
     public HumanLand() {
     }
 
-    public HumanLand(int health) {
-        super(health);
-    }
-
-    @Override
     public int getHealth() {
         return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
     }
 
     @Override
@@ -19,5 +19,10 @@ public class HumanLand extends Land {
         return "HumanLand{" +
                 "health=" + health +
                 '}';
+    }
+
+    @Override
+    public void update(String mess) {
+        System.out.println( mess + " trúng người rồi trừ tiền.");
     }
 }
