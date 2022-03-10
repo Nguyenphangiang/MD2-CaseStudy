@@ -10,8 +10,15 @@ public class MissileLaunchers {
         this.checkMissile = checkMissile;
     }
 
-    public boolean clean(){
-        return this.checkMissile = true;
+    public boolean isCheckMissile() {
+        return checkMissile;
+    }
+
+    public void launch(){
+        this.checkMissile = false;
+    }
+    public void clean(){
+        this.checkMissile = true;
     }
 
     @Override

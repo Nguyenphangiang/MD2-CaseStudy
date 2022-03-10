@@ -2,7 +2,9 @@ package model;
 
 import java.util.Scanner;
 
-public class MissileFactory {
+public class MissileFactory  {
+    public int factoryTreasury = 1000;
+
 
     public static final int USA_TACTICAL_MISSILE_POWER = 150;
     public static final int USA_BALLISTIC_MISSILE_POWER = 250;
@@ -19,7 +21,7 @@ public class MissileFactory {
     private TacticalMissile tacticalMissile;
     private BallisticMissile ballisticMissile;
 
-    Treasury treasury = new Treasury();
+
 
     public MissileFactory(){
     }
@@ -37,12 +39,12 @@ public class MissileFactory {
         if (tacticalMissile.getCountryFactory().equals("Usa")){
             tacticalMissile.setPower(USA_TACTICAL_MISSILE_POWER);
             tacticalMissile.setPrice(USA_TACTICAL_MISSILE_PRICE);
-            productionCost(tacticalMissile);
+            factoryTreasury =  factoryTreasury - tacticalMissile.getPrice()*tacticalMissile.getQuantity();
             return tacticalMissile;
         } else {
             tacticalMissile.setPower(RUSSIA_TACTICAL_MISSILE_POWER);
             tacticalMissile.setPrice(RUSSIA_TACTICAL_MISSILE_PRICE);
-            productionCost(tacticalMissile);
+            factoryTreasury =  factoryTreasury - tacticalMissile.getPrice()*tacticalMissile.getQuantity();
             return tacticalMissile;
         }
     }
@@ -60,18 +62,19 @@ public class MissileFactory {
         if (ballisticMissile.getCountryFactory().equals("Usa")){
             ballisticMissile.setPower(USA_BALLISTIC_MISSILE_POWER);
             ballisticMissile.setPrice(USA_BALLISTIC_MISSILE_PRICE);
-            productionCost(ballisticMissile);
+            factoryTreasury = factoryTreasury - ballisticMissile.getPrice()* ballisticMissile.getQuantity();
             return ballisticMissile;
         } else {
             ballisticMissile.setPower(RUSSIA_BALLISTIC_MISSILE_POWER);
             ballisticMissile.setPrice(RUSSIA_BALLISTIC_MISSILE_PRICE);
-            productionCost(ballisticMissile);
+            factoryTreasury = factoryTreasury - ballisticMissile.getPrice()* ballisticMissile.getQuantity();
             return ballisticMissile;
         }
     }
-    public  void productionCost(Rocket rocket){
-        treasury.setMoney(treasury.getMoney()-(rocket.getPrice()* rocket.getQuantity()));
+    public void productCost(Rocket rocket){
+
     }
+
 
     //thêm , sửa ...
 }
