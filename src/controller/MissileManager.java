@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MissileManager  {
+    public boolean rightTarget;
     public static final int MISSILE_SPEED = 20;
     private LandManager landManager = new LandManager();
     private MissileLaunchers missileLaunchers = new MissileLaunchers();
@@ -57,34 +58,37 @@ public class MissileManager  {
         }
     }
     public void checkTreasuryMoney(){
-        System.out.println(missileFactory.factoryTreasury);
+        System.out.println("-----NGÂN KHỐ" + missileFactory.factoryTreasury);
     }
     public void launchMissile(String name){
         if (missileLaunchers.isCheckMissile()){
             if (isNameMissile(name,rocketList)){
                 int missilePosition = getMissilePosition(rocketList,name);
                 if (rocketList.get(missilePosition).getQuantity() ==1){
-                    rocketList.remove(missilePosition);
                     missileFly();
+                    target();
+                    penalty(rocketList.get(missilePosition));
+                    bonus(rocketList.get(missilePosition));
+                    rocketList.remove(missilePosition);
                     missileLaunchers.launch();
                     try {
                         missileData.writeFile(rocketList);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    target();
                 } else {
                     int afterLaunch = rocketList.get(missilePosition).getQuantity() -1;
-                    rocketList.get(missilePosition).setQuantity(afterLaunch);
                     missileFly();
-
+                    target();
+                    penalty(rocketList.get(missilePosition));
+                    bonus(rocketList.get(missilePosition));
+                    rocketList.get(missilePosition).setQuantity(afterLaunch);
                     missileLaunchers.launch();
                     try {
                         missileData.writeFile(rocketList);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    target();
                 }
             } else
                 System.out.println("Không có tên lửa đó.");
@@ -132,16 +136,52 @@ public class MissileManager  {
         if (target == 0){
            landManager.land.addNew(landManager.humanLand);
            landManager.land.notification("<HUMAN LAND>");
-
            landManager.land.remove(landManager.humanLand);
+           rightTarget = false;
         } else {
             landManager.land.addNew(landManager.monsterLand);
             landManager.land.notification("<MONSTER LAND>");
             landManager.land.remove(landManager.monsterLand);
+            rightTarget = true;
         }
     }
-
-
+    public  int checkPower(Rocket rocket){
+        int damageMissile = 0;
+        if (rocket instanceof TacticalMissile){
+           int power =  ((TacticalMissile) rocket).getPower();
+           if (power == missileFactory.RUSSIA_TACTICAL_MISSILE_POWER){
+               damageMissile = 100;
+           } else {
+               damageMissile = 150;
+           }
+            return damageMissile;
+        } else {
+            if (rocket instanceof BallisticMissile){
+                int power = ((BallisticMissile) rocket).getPower();
+                if (power == missileFactory.RUSSIA_BALLISTIC_MISSILE_POWER){
+                    damageMissile = 200;
+                } else {
+                    damageMissile = 250;
+                }
+                return damageMissile;
+            }
+        } return damageMissile;
+    }
+    public void penalty(Rocket rocket){
+        if (!rightTarget){
+            missileFactory.setFactoryTreasury(missileFactory.getFactoryTreasury()-checkPower(rocket));
+            landManager.humanLand.setHealth(landManager.humanLand.getHealth()-checkPower(rocket));
+        }
+    }public void bonus(Rocket rocket){
+        if (rightTarget){
+            missileFactory.setFactoryTreasury(missileFactory.getFactoryTreasury()+checkPower(rocket));
+            landManager.monsterLand.setHealth(landManager.monsterLand.getHealth()-checkPower(rocket));
+        }
+    }
+    public void showProcess(){
+        System.out.println("---> HUMAN IN LAND = " + landManager.humanLand.getHealth());
+        System.out.println("---> MONSTER IN LAND = " + landManager.monsterLand.getHealth());
+    }
     private boolean isNameMissile(String name,ArrayList<Rocket> rockets){
         for (int i = 0; i < rockets.size(); i++) {
             if (rockets.get(i).getName().equals(name)){

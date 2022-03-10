@@ -31,8 +31,9 @@ public class Client {
                     1.Chế tạo tên lửa .
                     2.Hiển thị số tên lửa.
                     3.Phóng tên lửa.
-                    4.Xem ngân khố.
-                    5.Nạp tên lửa vào bệ phóng.
+                    4.Nạp tên lửa vào bệ phóng.
+                    5.Xem ngân khố.
+                    6.Xem tiến trình.
                     0.Thoát.
                     Chọn tính năng:\s""");
             choice = scanner.nextInt();
@@ -73,12 +74,16 @@ public class Client {
                         }
                     break;
                 case 4:
-                    missileManager.checkTreasuryMoney();
-                    break;
-                case 5:
                     missileManager.reloadLauncher();
                     break;
+                case 5:
+                    missileManager.checkTreasuryMoney();
+                    break;
+                case 6:
+                    missileManager.showProcess();
+                    break;
             }
+
         } while (choice != 0);
     }
 }

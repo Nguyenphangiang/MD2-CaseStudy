@@ -5,23 +5,28 @@ import java.util.Scanner;
 public class MissileFactory  {
     public int factoryTreasury = 1000;
 
+    public int getFactoryTreasury() {
+        return factoryTreasury;
+    }
 
-    public static final int USA_TACTICAL_MISSILE_POWER = 150;
-    public static final int USA_BALLISTIC_MISSILE_POWER = 250;
+    public void setFactoryTreasury(int factoryTreasury) {
+        this.factoryTreasury = factoryTreasury;
+    }
 
-    public static final int USA_TACTICAL_MISSILE_PRICE = 200;
-    public static final int USA_BALLISTIC_MISSILE_PRICE = 150;
+    public  final int USA_TACTICAL_MISSILE_POWER = 150;
+    public  final int USA_BALLISTIC_MISSILE_POWER = 250;
 
-    public static final int RUSSIA_TACTICAL_MISSILE_POWER = 100;
-    public static final int RUSSIA_BALLISTIC_MISSILE_POWER = 200;
+    public  final int USA_TACTICAL_MISSILE_PRICE = 200;
+    public  final int USA_BALLISTIC_MISSILE_PRICE = 150;
 
-    public static final int RUSSIA_TACTICAL_MISSILE_PRICE = 150;
-    public static final int RUSSIA_BALLISTIC_MISSILE_PRICE = 100;
+    public  final int RUSSIA_TACTICAL_MISSILE_POWER = 100;
+    public  final int RUSSIA_BALLISTIC_MISSILE_POWER = 200;
+
+    public  final int RUSSIA_TACTICAL_MISSILE_PRICE = 150;
+    public  final int RUSSIA_BALLISTIC_MISSILE_PRICE = 100;
 
     private TacticalMissile tacticalMissile;
     private BallisticMissile ballisticMissile;
-
-
 
     public MissileFactory(){
     }
