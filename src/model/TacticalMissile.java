@@ -7,6 +7,10 @@ public class TacticalMissile extends Rocket{
     public TacticalMissile() {
     }
 
+    public TacticalMissile(int quantity) {
+        super(quantity);
+    }
+
     public TacticalMissile(String name, String countryFactory, int price, int quantity, int power) {
         super(name, countryFactory, price, quantity);
         this.power = power;

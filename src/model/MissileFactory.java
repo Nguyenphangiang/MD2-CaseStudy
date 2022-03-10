@@ -3,6 +3,12 @@ package model;
 import java.util.Scanner;
 
 public class MissileFactory  {
+    public static final String TACTICAL_MISSILE_RUSSIA = "TM-1";
+    public static final String RUSSIA = "Russia";
+    public static final String TACTICAL_MISSILE_USA = "TM-2";
+    public static final String USA = "USA";
+    public static final String BALLISTIC_MISSILE_RUSSIA = "BM-1";
+    public static final String BALLISTIC_MISSILE_USA = "BM-2";
     public int factoryTreasury = 1000;
 
     public int getFactoryTreasury() {
@@ -25,57 +31,47 @@ public class MissileFactory  {
     public  final int RUSSIA_TACTICAL_MISSILE_PRICE = 150;
     public  final int RUSSIA_BALLISTIC_MISSILE_PRICE = 100;
 
-    private TacticalMissile tacticalMissile;
-    private BallisticMissile ballisticMissile;
-
     public MissileFactory(){
     }
-    public TacticalMissile creatTacticalMissile(){
+    public TacticalMissile creatTacticalMissile1(){
+        return getMissileTactical(TACTICAL_MISSILE_RUSSIA, RUSSIA, RUSSIA_TACTICAL_MISSILE_POWER, RUSSIA_TACTICAL_MISSILE_PRICE);
+    }public TacticalMissile creatTacticalMissile2(){
+        return getMissileTactical(TACTICAL_MISSILE_USA, USA, USA_TACTICAL_MISSILE_POWER, USA_TACTICAL_MISSILE_PRICE);
+    }
+
+    private TacticalMissile getMissileTactical(String tacticalMissileUsa, String usa, int usa_tactical_missile_power, int usa_tactical_missile_price) {
         Scanner scanner1 = new Scanner(System.in);
-        System.out.println("Nhập tên missile: ");
-        String missileName = scanner1.nextLine();
-        Scanner scanner2 = new Scanner(System.in);
-        System.out.println("Nhập tên đất nước sản xuất (Russia or USA): ");
-        String missileProducer = scanner2.nextLine();
-        Scanner scanner3 = new Scanner(System.in);
         System.out.println("Nhập số lượng : ");
-        int missileQantity = scanner3.nextInt();
-        tacticalMissile = new TacticalMissile(missileName,missileProducer,missileQantity);
-        if (tacticalMissile.getCountryFactory().equals("Usa")){
-            tacticalMissile.setPower(USA_TACTICAL_MISSILE_POWER);
-            tacticalMissile.setPrice(USA_TACTICAL_MISSILE_PRICE);
-            factoryTreasury =  factoryTreasury - tacticalMissile.getPrice()*tacticalMissile.getQuantity();
-            return tacticalMissile;
-        } else {
-            tacticalMissile.setPower(RUSSIA_TACTICAL_MISSILE_POWER);
-            tacticalMissile.setPrice(RUSSIA_TACTICAL_MISSILE_PRICE);
-            factoryTreasury =  factoryTreasury - tacticalMissile.getPrice()*tacticalMissile.getQuantity();
-            return tacticalMissile;
-        }
+        int missileQuantity = scanner1.nextInt();
+        TacticalMissile tacticalMissile = new TacticalMissile(missileQuantity);
+        tacticalMissile.setName(tacticalMissileUsa);
+        tacticalMissile.setCountryFactory(usa);
+        tacticalMissile.setPower(usa_tactical_missile_power);
+        tacticalMissile.setPrice(usa_tactical_missile_price);
+        factoryTreasury =  factoryTreasury - tacticalMissile.getPrice()* tacticalMissile.getQuantity();
+        return tacticalMissile;
     }
-    public BallisticMissile creatBallisticMissile(){
-        Scanner sc1 = new Scanner(System.in);
-        System.out.println("Nhập tên missile: ");
-        String missileName = sc1.nextLine();
-        Scanner sc2 = new Scanner(System.in);
-        System.out.println("Nhập tên nước sản xuất: ");
-        String missileProducer = sc2.nextLine();
-        Scanner sc3 = new Scanner(System.in);
+
+    public BallisticMissile creatBallisticMissile1(){
+        return getMissileBallistic(BALLISTIC_MISSILE_RUSSIA, RUSSIA, RUSSIA_BALLISTIC_MISSILE_POWER, RUSSIA_BALLISTIC_MISSILE_PRICE);
+    }
+        public BallisticMissile creatBallisticMissile2(){
+            return getMissileBallistic(BALLISTIC_MISSILE_USA, USA, USA_BALLISTIC_MISSILE_POWER, USA_BALLISTIC_MISSILE_PRICE);
+        }
+
+    private BallisticMissile getMissileBallistic(String ballisticMissileUsa, String usa, int usa_ballistic_missile_power, int usa_ballistic_missile_price) {
+        Scanner sc = new Scanner(System.in);
         System.out.println("Nhập số lượng : ");
-        int missileQuantity = sc3.nextInt();
-        ballisticMissile = new BallisticMissile(missileName,missileProducer,missileQuantity);
-        if (ballisticMissile.getCountryFactory().equals("Usa")){
-            ballisticMissile.setPower(USA_BALLISTIC_MISSILE_POWER);
-            ballisticMissile.setPrice(USA_BALLISTIC_MISSILE_PRICE);
-            factoryTreasury = factoryTreasury - ballisticMissile.getPrice()* ballisticMissile.getQuantity();
-            return ballisticMissile;
-        } else {
-            ballisticMissile.setPower(RUSSIA_BALLISTIC_MISSILE_POWER);
-            ballisticMissile.setPrice(RUSSIA_BALLISTIC_MISSILE_PRICE);
-            factoryTreasury = factoryTreasury - ballisticMissile.getPrice()* ballisticMissile.getQuantity();
-            return ballisticMissile;
-        }
+        int missileQuantity = sc.nextInt();
+        BallisticMissile ballisticMissile = new BallisticMissile(missileQuantity);
+        ballisticMissile.setName(ballisticMissileUsa);
+        ballisticMissile.setCountryFactory(usa);
+        ballisticMissile.setPower(usa_ballistic_missile_power);
+        ballisticMissile.setPrice(usa_ballistic_missile_price);
+        factoryTreasury = factoryTreasury - ballisticMissile.getPrice()* ballisticMissile.getQuantity();
+        return ballisticMissile;
     }
+
 
     //thêm , sửa ...
 }

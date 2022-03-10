@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Client {
-    private static MissileLaunchers missileLaunchers = new MissileLaunchers();
+
     private static MissileManager missileManager = new MissileManager();
     private static ArrayList<Rocket> missileClient = MissileManager.rocketList;
 
@@ -40,14 +40,30 @@ public class Client {
             switch (choice){
                 case 1:
                     Scanner sc = new Scanner(System.in);
-                    System.out.println("Chọn kiểu tên lửa muốn chế tạo.\n1-1.Tactical.\n1-2.Ballistic.");
+                    System.out.println("""
+                            Chọn kiểu tên lửa muốn chế tạo.
+                            1-1.Tactical TM-1.
+                            1-2.Tactical TM-2.
+                            1-3.Ballistic BM-1.
+                            1-4.Ballistic BM-2.
+                            .""");
                     int typeMissile = sc.nextInt();
                     switch (typeMissile){
                         case 1:
-                            missileManager.addNewMissile("tactical");
+                            missileManager.addNewMissile("tactical1");
+                            System.out.println("-----Xong");
                             break;
                         case 2:
-                            missileManager.addNewMissile("ballistic");
+                            missileManager.addNewMissile("tactical2");
+                            System.out.println("-----Xong");
+                            break;
+                        case 3:
+                            missileManager.addNewMissile("ballistic1");
+                            System.out.println("-----Xong");
+                            break;
+                        case 4:
+                            missileManager.addNewMissile("ballistic2");
+                            System.out.println("-----Xong");
                             break;
                     }
                     break;
@@ -56,7 +72,13 @@ public class Client {
                     break;
                 case 3:
                     Scanner sc1 = new Scanner(System.in);
-                    System.out.println("Chọn tên lửa muốn phóng.\n3-1.TM-1.\n3-2.TM-2.\n3-3.BM-1.\n3-4.BM-2.");
+                    System.out.println("""
+                            Chọn tên lửa muốn phóng.
+                            3-1.TM-1.
+                            3-2.TM-2.
+                            3-3.BM-1.
+                            3-4.BM-2
+                            .""");
                     int missileLaunch = sc1.nextInt();
                     switch (missileLaunch){
                         case 1:
@@ -83,7 +105,6 @@ public class Client {
                     missileManager.showProcess();
                     break;
             }
-
         } while (choice != 0);
     }
 }

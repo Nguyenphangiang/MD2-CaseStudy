@@ -11,6 +11,10 @@ public class Rocket implements Serializable {
     public Rocket() {
     }
 
+    public Rocket(int quantity) {
+        this.quantity = quantity;
+    }
+
     public Rocket(String name, String countryFactory, int quantity) {
         this.name = name;
         this.countryFactory = countryFactory;

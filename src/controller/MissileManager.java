@@ -10,8 +10,8 @@ import java.util.Random;
 public class MissileManager  {
     public boolean rightTarget;
     public static final int MISSILE_SPEED = 20;
-    private LandManager landManager = new LandManager();
-    private MissileLaunchers missileLaunchers = new MissileLaunchers();
+    private final LandManager landManager = new LandManager();
+    private final MissileLaunchers missileLaunchers = new MissileLaunchers();
     public static IMissileData missileData = new MissileData();
     public static ArrayList<Rocket> rocketList = MissileData.saveFile;
 
@@ -19,8 +19,8 @@ public class MissileManager  {
 
     public  void addNewMissile(String type){
         switch (type){
-            case "tactical" :
-                TacticalMissile newTMissile =  missileFactory.creatTacticalMissile();
+            case "tactical1" :
+                TacticalMissile newTMissile =  missileFactory.creatTacticalMissile1();
                 if (checkNameMissile(newTMissile)){
                     int buyQuantity = newTMissile.getQuantity();
                     int totalQuantity = buyQuantity + rocketList.get(getIndexByName(newTMissile)).getQuantity();
@@ -34,14 +34,43 @@ public class MissileManager  {
                     e.printStackTrace();
                 }
                 break;
-            case "ballistic":
-                BallisticMissile newBMissile = missileFactory.creatBallisticMissile();
+                case "tactical2" :
+                TacticalMissile newTMissile1 =  missileFactory.creatTacticalMissile2();
+                if (checkNameMissile(newTMissile1)){
+                    int buyQuantity = newTMissile1.getQuantity();
+                    int totalQuantity = buyQuantity + rocketList.get(getIndexByName(newTMissile1)).getQuantity();
+                    rocketList.get(getIndexByName(newTMissile1)).setQuantity(totalQuantity);
+                } else {
+                    rocketList.add(newTMissile1);
+                }
+                try {
+                    missileData.writeFile(rocketList);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case "ballistic1":
+                BallisticMissile newBMissile = missileFactory.creatBallisticMissile1();
                 if (checkNameMissile(newBMissile)){
                     int buyQuantity = newBMissile.getQuantity();
                     int totalQuantity = buyQuantity + rocketList.get(getIndexByName(newBMissile)).getQuantity();
                     rocketList.get(getIndexByName(newBMissile)).setQuantity(totalQuantity);
                 } else {
                     rocketList.add(newBMissile);
+                }
+                try {
+                    missileData.writeFile(rocketList);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;case "ballistic2":
+                BallisticMissile newBMissile2 = missileFactory.creatBallisticMissile2();
+                if (checkNameMissile(newBMissile2)){
+                    int buyQuantity = newBMissile2.getQuantity();
+                    int totalQuantity = buyQuantity + rocketList.get(getIndexByName(newBMissile2)).getQuantity();
+                    rocketList.get(getIndexByName(newBMissile2)).setQuantity(totalQuantity);
+                } else {
+                    rocketList.add(newBMissile2);
                 }
                 try {
                     missileData.writeFile(rocketList);

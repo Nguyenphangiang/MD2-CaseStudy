@@ -6,6 +6,10 @@ public class BallisticMissile extends Rocket{
     public BallisticMissile() {
     }
 
+    public BallisticMissile(int quantity) {
+        super(quantity);
+    }
+
     public BallisticMissile(String name, String countryFactory, int quantity) {
         super(name, countryFactory, quantity);
     }
