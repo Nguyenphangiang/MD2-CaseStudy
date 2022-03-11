@@ -3,6 +3,15 @@ package model;
 import java.io.Serializable;
 
 public class Rocket implements Serializable {
+    public void setAvoidRadar(boolean avoidRadar) {
+        this.avoidRadar = avoidRadar;
+    }
+
+    public boolean isAvoidRadar() {
+        return avoidRadar;
+    }
+
+    private boolean avoidRadar;
     private String name;
     private String countryFactory;
     private int price;

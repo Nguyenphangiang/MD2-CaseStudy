@@ -2,7 +2,11 @@ package model;
 
 public class TacticalMissile extends Rocket{
     private int  power;
-    private final boolean  avoidRadar = true;
+
+    public boolean isAvoidRadar() {
+        super.setAvoidRadar(true);
+        return super.isAvoidRadar();
+    }
 
     public TacticalMissile() {
     }
@@ -27,13 +31,10 @@ public class TacticalMissile extends Rocket{
     public void setPower(int power) {
         this.power = power;
     }
-    public boolean isAvoidRadar() {
-        return avoidRadar;
-    }
     @Override
     public String toString() {
         return "TacticalMissile{" + super.toString() +
-                "avoidRadar=" + avoidRadar +
+                "avoidRadar = true" +
                 '}';
     }
 }

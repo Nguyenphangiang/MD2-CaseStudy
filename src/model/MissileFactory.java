@@ -1,8 +1,11 @@
 package model;
 
+import controller.MissileManager;
+
 import java.util.Scanner;
 
 public class MissileFactory  {
+
     public static final String TACTICAL_MISSILE_RUSSIA = "TM-1";
     public static final String RUSSIA = "Russia";
     public static final String TACTICAL_MISSILE_USA = "TM-2";

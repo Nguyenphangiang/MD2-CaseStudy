@@ -3,6 +3,12 @@ package model;
 public class BallisticMissile extends Rocket{
     private int power;
 
+
+    public boolean isAvoidRadar() {
+       super.setAvoidRadar(false);
+       return super.isAvoidRadar();
+    }
+
     public BallisticMissile() {
     }
 
@@ -30,7 +36,7 @@ public class BallisticMissile extends Rocket{
     @Override
     public String toString() {
         return "BallisticMissile{" + super.toString() +
-                "power=" + power +
+                "power=" + power + "avoid radar = false" +
                 '}';
     }
 }

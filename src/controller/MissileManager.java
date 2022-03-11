@@ -6,8 +6,15 @@ import storage.MissileData;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MissileManager  {
+    public static final String MAX_MISSILE_QUANTITY = "[1-5]";
+    public static final int MAX_BUY_TM1_MISSILE = 7;
+    public static final int MAX_BUY_TM2_MISSILE = 6;
+    public static final int MAX_BUY_BM1_MISSILE = 11;
+    public static final int MAX_BUY_BM2_MISSILE = 7;
     public boolean rightTarget;
     public static final int MISSILE_SPEED = 20;
     private final LandManager landManager = new LandManager();
@@ -24,63 +31,88 @@ public class MissileManager  {
             switch (type){
                 case "tactical1" :
                     TacticalMissile newTMissile =  missileFactory.creatTacticalMissile1();
-                    if (checkNameMissile(newTMissile)){
-                        int buyQuantity = newTMissile.getQuantity();
-                        int totalQuantity = buyQuantity + rocketList.get(getIndexByName(newTMissile)).getQuantity();
-                        rocketList.get(getIndexByName(newTMissile)).setQuantity(totalQuantity);
+                    if (newTMissile.getQuantity() >= MAX_BUY_TM1_MISSILE){
+                        System.out.println("----- KO ĐỦ TIỀN -----");
                     } else {
-                        rocketList.add(newTMissile);
+                        if (checkNameMissile(newTMissile)){
+                            int buyQuantity = newTMissile.getQuantity();
+                            int totalQuantity = buyQuantity + rocketList.get(getIndexByName(newTMissile)).getQuantity();
+                            rocketList.get(getIndexByName(newTMissile)).setQuantity(totalQuantity);
+                            System.out.println("-----Xong-----");
+                        } else {
+                            rocketList.add(newTMissile);
+                            System.out.println("-----Xong-----");
+                        }
+                        try {
+                            missileData.writeFile(rocketList);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
                     }
-                    try {
-                        missileData.writeFile(rocketList);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    break;
                 case "tactical2" :
                     TacticalMissile newTMissile1 =  missileFactory.creatTacticalMissile2();
-                    if (checkNameMissile(newTMissile1)){
-                        int buyQuantity = newTMissile1.getQuantity();
-                        int totalQuantity = buyQuantity + rocketList.get(getIndexByName(newTMissile1)).getQuantity();
-                        rocketList.get(getIndexByName(newTMissile1)).setQuantity(totalQuantity);
+                    if (newTMissile1.getQuantity() >= MAX_BUY_TM2_MISSILE){
+                        System.out.println("----- KO ĐỦ TIỀN -----");
                     } else {
-                        rocketList.add(newTMissile1);
+                        if (checkNameMissile(newTMissile1)){
+                            int buyQuantity = newTMissile1.getQuantity();
+                            int totalQuantity = buyQuantity + rocketList.get(getIndexByName(newTMissile1)).getQuantity();
+                            rocketList.get(getIndexByName(newTMissile1)).setQuantity(totalQuantity);
+                            System.out.println("-----Xong-----");
+                        } else {
+                            rocketList.add(newTMissile1);
+                            System.out.println("-----Xong-----");
+                        }
+                        try {
+                            missileData.writeFile(rocketList);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
                     }
-                    try {
-                        missileData.writeFile(rocketList);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    break;
                 case "ballistic1":
                     BallisticMissile newBMissile = missileFactory.creatBallisticMissile1();
-                    if (checkNameMissile(newBMissile)){
-                        int buyQuantity = newBMissile.getQuantity();
-                        int totalQuantity = buyQuantity + rocketList.get(getIndexByName(newBMissile)).getQuantity();
-                        rocketList.get(getIndexByName(newBMissile)).setQuantity(totalQuantity);
+                    if(newBMissile.getQuantity() >= MAX_BUY_BM1_MISSILE){
+                        System.out.println("----- KO ĐỦ TIỀN -----");
                     } else {
-                        rocketList.add(newBMissile);
+                        if (checkNameMissile(newBMissile)){
+                            int buyQuantity = newBMissile.getQuantity();
+                            int totalQuantity = buyQuantity + rocketList.get(getIndexByName(newBMissile)).getQuantity();
+                            rocketList.get(getIndexByName(newBMissile)).setQuantity(totalQuantity);
+                            System.out.println("-----Xong-----");
+                        } else {
+                            rocketList.add(newBMissile);
+                            System.out.println("-----Xong-----");
+                        }
+                        try {
+                            missileData.writeFile(rocketList);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
                     }
-                    try {
-                        missileData.writeFile(rocketList);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    break;case "ballistic2":
+                    case "ballistic2":
                     BallisticMissile newBMissile2 = missileFactory.creatBallisticMissile2();
-                    if (checkNameMissile(newBMissile2)){
-                        int buyQuantity = newBMissile2.getQuantity();
-                        int totalQuantity = buyQuantity + rocketList.get(getIndexByName(newBMissile2)).getQuantity();
-                        rocketList.get(getIndexByName(newBMissile2)).setQuantity(totalQuantity);
+                    if (newBMissile2.getQuantity() >= MAX_BUY_BM2_MISSILE){
+                        System.out.println("----- KO ĐỦ TIỀN -----");
                     } else {
-                        rocketList.add(newBMissile2);
+                        if (checkNameMissile(newBMissile2)){
+                            int buyQuantity = newBMissile2.getQuantity();
+                            int totalQuantity = buyQuantity + rocketList.get(getIndexByName(newBMissile2)).getQuantity();
+                            rocketList.get(getIndexByName(newBMissile2)).setQuantity(totalQuantity);
+                            System.out.println("-----Xong-----");
+                        } else {
+                            rocketList.add(newBMissile2);
+                            System.out.println("-----Xong-----");
+                        }
+                        try {
+                            missileData.writeFile(rocketList);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
                     }
-                    try {
-                        missileData.writeFile(rocketList);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    break;
             }
         }
 
@@ -156,7 +188,7 @@ public class MissileManager  {
                     land += "_";
                 }
             }
-            land += "|";
+            land += "oOo|";
             System.out.println(land);
             try {
                 Thread.sleep(1000);
@@ -166,7 +198,7 @@ public class MissileManager  {
         }System.out.println("-------KABOOM !!! -------");
     }
     public void target(){
-        int target = (new Random()).nextInt(2);
+        int target = getCritical();
         if (target == 0){
            landManager.land.addNew(landManager.humanLand);
            landManager.land.notification("<HUMAN LAND>");
@@ -184,18 +216,18 @@ public class MissileManager  {
         if (rocket instanceof TacticalMissile){
            int power =  ((TacticalMissile) rocket).getPower();
            if (power == missileFactory.RUSSIA_TACTICAL_MISSILE_POWER){
-               damageMissile = 100;
+               damageMissile = missileFactory.RUSSIA_TACTICAL_MISSILE_POWER;
            } else {
-               damageMissile = 150;
+               damageMissile = missileFactory.USA_TACTICAL_MISSILE_POWER;
            }
             return damageMissile;
         } else {
             if (rocket instanceof BallisticMissile){
                 int power = ((BallisticMissile) rocket).getPower();
                 if (power == missileFactory.RUSSIA_BALLISTIC_MISSILE_POWER){
-                    damageMissile = 200;
+                    damageMissile = missileFactory.RUSSIA_BALLISTIC_MISSILE_POWER;
                 } else {
-                    damageMissile = 250;
+                    damageMissile = missileFactory.USA_BALLISTIC_MISSILE_POWER;
                 }
                 return damageMissile;
             }
@@ -203,13 +235,38 @@ public class MissileManager  {
     }
     public void penalty(Rocket rocket){
         if (!rightTarget){
+            if (rocket.isAvoidRadar()){
+                isCritical(rocket);
+            } else {
+                missileFactory.setFactoryTreasury(missileFactory.getFactoryTreasury()-checkPower(rocket));
+                landManager.humanLand.setHealth(landManager.humanLand.getHealth()-checkPower(rocket));
+            }
+        }
+    }
+
+    private void isCritical(Rocket rocket) {
+        int critical = getCritical();
+        if (critical == 0){
+            missileFactory.setFactoryTreasury(missileFactory.getFactoryTreasury()-(checkPower(rocket)*2));
+            landManager.humanLand.setHealth(landManager.humanLand.getHealth()-(checkPower(rocket)*2));
+        } else {
             missileFactory.setFactoryTreasury(missileFactory.getFactoryTreasury()-checkPower(rocket));
             landManager.humanLand.setHealth(landManager.humanLand.getHealth()-checkPower(rocket));
         }
-    }public void bonus(Rocket rocket){
+    }
+
+    private int getCritical() {
+        return (new Random()).nextInt(2);
+    }
+
+    public void bonus(Rocket rocket){
         if (rightTarget){
-            missileFactory.setFactoryTreasury(missileFactory.getFactoryTreasury()+checkPower(rocket));
-            landManager.monsterLand.setHealth(landManager.monsterLand.getHealth()-checkPower(rocket));
+            if (rocket.isAvoidRadar()){
+                isCritical(rocket);
+            } else {
+                missileFactory.setFactoryTreasury(missileFactory.getFactoryTreasury()+checkPower(rocket));
+                landManager.monsterLand.setHealth(landManager.monsterLand.getHealth()-checkPower(rocket));
+            }
         }
     }
     public void showProcess(){

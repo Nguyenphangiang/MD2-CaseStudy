@@ -53,19 +53,15 @@ public class Client {
                     switch (typeMissile){
                         case 1:
                             missileManager.addNewMissile("tactical1");
-                            System.out.println("-----Xong");
                             break;
                         case 2:
                             missileManager.addNewMissile("tactical2");
-                            System.out.println("-----Xong");
                             break;
                         case 3:
                             missileManager.addNewMissile("ballistic1");
-                            System.out.println("-----Xong");
                             break;
                         case 4:
                             missileManager.addNewMissile("ballistic2");
-                            System.out.println("-----Xong");
                             break;
                     }
                     break;
