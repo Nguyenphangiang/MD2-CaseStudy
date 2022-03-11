@@ -37,6 +37,8 @@ public class Client {
                     0.Thoát.
                     Chọn tính năng:\s""");
             choice = scanner.nextInt();
+            missileManager.getHumanLandHealth(choice);
+            missileManager.getMonsterLandHealth(choice);
             switch (choice){
                 case 1:
                     Scanner sc = new Scanner(System.in);
@@ -107,4 +109,5 @@ public class Client {
             }
         } while (choice != 0);
     }
+
 }

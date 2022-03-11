@@ -72,6 +72,4 @@ public class MissileFactory  {
         return ballisticMissile;
     }
 
-
-    //thêm , sửa ...
 }
