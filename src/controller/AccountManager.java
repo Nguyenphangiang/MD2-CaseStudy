@@ -10,6 +10,8 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static view.Client.showLoginMenu;
+
 public class AccountManager {
     private static final String ACCOUNT_REGEX = "^[a-zA-Z0-9]{8,12}$";
     private static final String PASSWORD_REGEX = "^[a-z0-9]{8,12}$";
@@ -68,7 +70,7 @@ public class AccountManager {
         return false;
     }
 
-    private void deleteAccount(String accName){
+    public void deleteAccount(String accName){
         for (int i = 0; i < accountList.size(); i++) {
             if (accountList.get(i).getAccName().equals(accName)){
                 accountList.remove(i);
@@ -98,7 +100,7 @@ public class AccountManager {
             }
         } return index;
     }
-    private void changePassword(){
+    public void changePassword(){
         Scanner sc1 = new Scanner(System.in);
         System.out.println("------ Nhập tên tài khoản muốn đổi mật khẩu: ");
         String accName = sc1.nextLine();
@@ -125,7 +127,7 @@ public class AccountManager {
             }
         } return false;
     }
-    private void showUserPassword(){
+    public void showUserPassword(){
         Scanner sc = new Scanner(System.in);
         System.out.println("----- Nhập tên tài khoản muốn show mật khẩu: ");
         String accName = sc.nextLine();
@@ -145,74 +147,10 @@ public class AccountManager {
         Matcher matcher = pattern.matcher(regex);
         return matcher.matches();
     }
-    private void welcomeEntering(String playerName){
+    public void welcomeEntering(String playerName){
         System.out.println("====================================");
         System.out.println("|    > WELCOME TO MISSILE GAME <   |");
         System.out.println(">>>>>>>> " + playerName + " <<<<<<<<");
         System.out.println("|----------------------------------|");
-    }
-    public void showLoginMenu(){
-        System.out.println("""
-                -------------------------------------------------
-                |         => .WELCOME. TO LOGIN MENU.<=         |
-                |        Nhập tên tài khoản và mật khẩu.....    | 
-                |                                               |
-                =================================================
-                """);
-        Scanner sc2 = new Scanner(System.in);
-        System.out.println("---- Nhập tài khoản: ");
-        String inputAccName= sc2.nextLine();
-        Scanner sc3 = new Scanner(System.in);
-        System.out.println("---- Nhập password: ");
-        String inputPassword = sc3.nextLine();
-        if (inputAccName.equals(ADMIN_ACCNAME) &&(inputPassword.equals(ADMIN_ACCNAME))){
-            showAdminMenu();
-        } else if (checkUserAccount(inputAccName) && checkUserPassword(inputPassword)){
-            welcomeEntering(inputAccName);
-        } else {
-            System.out.println("------- Sai mật khẩu hoặc tài khoản rồi .-----");
-            showLoginMenu();
-        }
-    }
-    private void showAdminMenu() {
-        int choice;
-        do {
-            Scanner sc = new Scanner(System.in);
-            System.out.println("""
-                    ______> WELCOME ADMIN <______
-                    1. Thêm tài khoản.
-                    2.Xóa tài khoản.
-                    3.Đổi password.
-                    4.Tìm lại mật khẩu.
-                    5.Show all account.
-                    0.Exit to login menu.
-                    Chọn tính năng :""");
-            choice = sc.nextInt();
-            switch (choice){
-                case 1:
-                    creatAccount();
-                    System.out.println("-----OKe-----");
-                    break;
-                case 2:
-                    Scanner sc1 = new Scanner(System.in);
-                    System.out.println("----- Xóa tài khoản : ");
-                    String deleteAccountName = sc1.nextLine();
-                    deleteAccount(deleteAccountName);
-                    System.out.println("-----OKe-----");
-                    break;
-                case 3:
-                    changePassword();
-                    break;
-                case 4:
-                    showUserPassword();
-                    break;
-                case 5:
-                    showAllAcount(accountList);
-                    break;
-                case 0:
-                    showLoginMenu();
-                    break;
-            }
-        }while (choice!=0);
     }
 }

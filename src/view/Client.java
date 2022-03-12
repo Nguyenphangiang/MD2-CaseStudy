@@ -3,12 +3,12 @@ package view;
 import controller.AccountManager;
 import controller.MissileManager;
 import model.*;
-import storage.MissileData;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Client {
+    public static final String BACK_MENU = "b";
     private static AccountManager accountManager = new AccountManager();
     private static MissileManager missileManager = new MissileManager();
     private static ArrayList<Rocket> missileClient = MissileManager.rocketList;
@@ -33,62 +33,134 @@ public class Client {
         }
         int inputLogin;
         do {
-            Scanner accInput = new Scanner(System.in);
-            System.out.println("""
-                    -------------------------------------------------
-                    |         => .WELCOME. TO LOGIN MENU.<=         |
-                    |1. Tạo tài khoản mới.                          |
-                    |2. Đã có tài khoản.                            |
-                    |3. Thoát chương trình.                         |
-                    =================================================
-                    """);
-            inputLogin = accInput.nextInt();
-            switch (inputLogin) {
-                case 1 -> {
-                    accountManager.creatAccount();
-                    accountManager.showLoginMenu();
-                    int choice;
-                    do {
-                        Scanner scanner = new Scanner(System.in);
-                        System.out.println("""
-                                1.Chế tạo tên lửa .
-                                2.Hiển thị số tên lửa.
-                                3.Phóng tên lửa.
-                                4.Nạp tên lửa vào bệ phóng.
-                                5.Xem ngân khố.
-                                6.Xem tiến trình.
-                                0.Thoát.
-                                Chọn tính năng:\s""");
-                        choice = scanner.nextInt();
-                        missileManager.getHumanLandHealth(choice);
-                        missileManager.getMonsterLandHealth(choice);
-                        gameplay(choice);
-                    } while (choice != 0);
-                }
-                case 2 -> {
-                    accountManager.showLoginMenu();
-                    int choice1;
-                    do {
-                        Scanner scanner = new Scanner(System.in);
-                        System.out.println("""
-                                1.Chế tạo tên lửa .
-                                2.Hiển thị số tên lửa.
-                                3.Phóng tên lửa.
-                                4.Nạp tên lửa vào bệ phóng.
-                                5.Xem ngân khố.
-                                6.Xem tiến trình.
-                                0.Thoát.
-                                Chọn tính năng:\s""");
-                        choice1 = scanner.nextInt();
-                        gameplay(choice1);
-                    } while (choice1 != 0);
-                }
-                case 3 -> inputLogin = 0;
-            }
+            inputLogin = gameLoginMenu();
         } while (inputLogin != 0);
     }
 
-
+    private static int gameLoginMenu() {
+        int inputLogin;
+        Scanner accInput = new Scanner(System.in);
+        System.out.println("""
+                -------------------------------------------------
+                |         => .WELCOME. TO LOGIN MENU.<=         |
+                |1. Tạo tài khoản mới.                          |
+                |2. Đã có tài khoản.                            |
+                |3. Thoát chương trình.                         |
+                =================================================
+                """);
+        inputLogin = accInput.nextInt();
+        switch (inputLogin) {
+            case 1 -> {
+                accountManager.creatAccount();
+                showLoginMenu();
+                int choice;
+                do {
+                    Scanner scanner = new Scanner(System.in);
+                    System.out.println("""
+                            1.Chế tạo tên lửa .
+                            2.Hiển thị số tên lửa.
+                            3.Phóng tên lửa.
+                            4.Nạp tên lửa vào bệ phóng.
+                            5.Xem ngân khố.
+                            6.Xem tiến trình.
+                            0.Thoát.
+                            Chọn tính năng:\s""");
+                    choice = scanner.nextInt();
+                    missileManager.getHumanLandHealth(choice);
+                    missileManager.getMonsterLandHealth(choice);
+                    gameplay(choice);
+                } while (choice != 0);
+            }
+            case 2 -> {
+                showLoginMenu();
+                int choice1;
+                do {
+                    Scanner scanner = new Scanner(System.in);
+                    System.out.println("""
+                            1.Chế tạo tên lửa .
+                            2.Hiển thị số tên lửa.
+                            3.Phóng tên lửa.
+                            4.Nạp tên lửa vào bệ phóng.
+                            5.Xem ngân khố.
+                            6.Xem tiến trình.
+                            0.Thoát.
+                            Chọn tính năng:\s""");
+                    choice1 = scanner.nextInt();
+                    gameplay(choice1);
+                } while (choice1 != 0);
+            }
+            case 3 -> inputLogin = 0;
+        }
+        return inputLogin;
+    }
+    public static void showLoginMenu() {
+        System.out.println("""
+                -------------------------------------------------
+                |         => .WELCOME. TO LOGIN MENU.<=         |
+                |        Nhập tên tài khoản và mật khẩu.....    |               
+                |                 Nhập 'b' để quay lại          |
+                =================================================
+                """);
+        Scanner sc2 = new Scanner(System.in);
+        System.out.println("---- Nhập tài khoản: ");
+        String inputAccName = sc2.nextLine();
+        if (!inputAccName.equals(BACK_MENU)) {
+            Scanner sc3 = new Scanner(System.in);
+            System.out.println("---- Nhập password: ");
+            String inputPassword = sc3.nextLine();
+            if (inputAccName.equals(AccountManager.ADMIN_ACCNAME) && (inputPassword.equals(AccountManager.ADMIN_ACCNAME))) {
+                showAdminMenu();
+            } else if (accountManager.checkUserAccount(inputAccName) && accountManager.checkUserPassword(inputPassword)) {
+                accountManager.welcomeEntering(inputAccName);
+            } else {
+                System.out.println("------- Sai mật khẩu hoặc tài khoản rồi .-----");
+                showLoginMenu();
+            }
+        } else {
+            gameLoginMenu();
+        }
+    }
+    public static void showAdminMenu() {
+        int choice;
+        do {
+            Scanner sc = new Scanner(System.in);
+            System.out.println("""
+                    ______> WELCOME ADMIN <______
+                    1. Thêm tài khoản.
+                    2.Xóa tài khoản.
+                    3.Đổi password.
+                    4.Tìm lại mật khẩu.
+                    5.Show all account.
+                    0.Exit to login menu.
+                    Chọn tính năng :""");
+            choice = sc.nextInt();
+            switch (choice){
+                case 1:
+                    accountManager.creatAccount();
+                    System.out.println("-----OKe-----");
+                    break;
+                case 2:
+                    Scanner sc1 = new Scanner(System.in);
+                    System.out.println("----- Xóa tài khoản : ");
+                    String deleteAccountName = sc1.nextLine();
+                    accountManager.deleteAccount(deleteAccountName);
+                    System.out.println("-----OKe-----");
+                    break;
+                case 3:
+                    accountManager.changePassword();
+                    break;
+                case 4:
+                    accountManager.showUserPassword();
+                    break;
+                case 5:
+                    accountManager.showAllAcount(accountClient);
+                    break;
+                case 0:
+                    showLoginMenu();
+                    break;
+            }
+        }while (choice!=0);
+    }
     private static void gameplay(int choice) {
         switch (choice) {
             case 1:
@@ -155,5 +227,4 @@ public class Client {
                 break;
         }
     }
-
 }

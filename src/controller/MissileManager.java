@@ -175,19 +175,31 @@ public class MissileManager  {
         while (runDistance < Land.DISTANCE){
             int speed = MISSILE_SPEED;
             runDistance += speed;
+            String sky = "0";
             String land ="|";
+            String under = "0";
             int percentTravel = (runDistance * 100)/Land.DISTANCE;
             for (int i = 0; i < Land.DISTANCE;i += Land.STEP){
                 if (percentTravel >= i + Land.STEP){
+                    sky += "_";
                     land += "~";
+                    under +="_";
                 } else if (percentTravel >= i && percentTravel < i + Land.STEP){
+                    sky += "_";
                     land += ">O>";
+                    under +="_";
                 }else {
-                    land += "_";
+                    sky += "_";
+                    land += "-";
+                    under +="_";
                 }
             }
-            land += "oOo|";
+            sky += "<|";
+            land += " oOo|";
+            under += "<|";
+            System.out.println(sky);
             System.out.println(land);
+            System.out.println(under);
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -231,16 +243,6 @@ public class MissileManager  {
             }
         } return damageMissile;
     }
-    public void penalty(Rocket rocket){
-        if (!rightTarget){
-            if (rocket.isAvoidRadar()){
-                isCritical(rocket);
-            } else {
-                missileFactory.setFactoryTreasury(missileFactory.getFactoryTreasury()-checkPower(rocket));
-                landManager.humanLand.setHealth(landManager.humanLand.getHealth()-checkPower(rocket));
-            }
-        }
-    }
 
     private void isCritical(Rocket rocket) {
         int critical = getCritical();
@@ -253,11 +255,20 @@ public class MissileManager  {
             landManager.humanLand.setHealth(landManager.humanLand.getHealth()-checkPower(rocket));
         }
     }
-
     private int getCritical() {
         return (new Random()).nextInt(2);
     }
 
+    public void penalty(Rocket rocket){
+        if (!rightTarget){
+            if (rocket.isAvoidRadar()){
+                isCritical(rocket);
+            } else {
+                missileFactory.setFactoryTreasury(missileFactory.getFactoryTreasury()-checkPower(rocket));
+                landManager.humanLand.setHealth(landManager.humanLand.getHealth()-checkPower(rocket));
+            }
+        }
+    }
     public void bonus(Rocket rocket){
         if (rightTarget){
             if (rocket.isAvoidRadar()){
@@ -272,6 +283,7 @@ public class MissileManager  {
         System.out.println("---> HUMAN IN LAND = " + landManager.humanLand.getHealth());
         System.out.println("---> MONSTER IN LAND = " + landManager.monsterLand.getHealth());
     }
+
     private boolean isNameMissile(String name,ArrayList<Rocket> rockets){
         for (int i = 0; i < rockets.size(); i++) {
             if (rockets.get(i).getName().equals(name)){
@@ -279,6 +291,16 @@ public class MissileManager  {
             }
         }return false;
     }
+    private boolean checkNameMissile(Rocket rocket){
+        boolean check = false;
+        for (int i = 0; i < rocketList.size(); i++) {
+            if (rocket.getName().equals(rocketList.get(i).getName())){
+                check = true;
+                break;
+            }
+        }return check;
+    }
+
     private int getMissilePosition(ArrayList<Rocket> rockets,String name){
         int index = -1;
         for (int i = 0; i < rockets.size(); i++) {
@@ -297,29 +319,17 @@ public class MissileManager  {
             }
         } return index;
     }
-    private boolean checkNameMissile(Rocket rocket){
-        boolean check = false;
-        for (int i = 0; i < rocketList.size(); i++) {
-            if (rocket.getName().equals(rocketList.get(i).getName())){
-                check = true;
-                break;
-            }
-        }return check;
-    }
-    public int getHumanLandHealth(int choice){
+
+    public void getHumanLandHealth(int choice){
         if (landManager.humanLand.getHealth() <=0){
             System.out.println("-----GAME_OVER-----");
             choice = 0;
-            return choice;
-        } else
-            return choice;
+        }
     }
-    public int getMonsterLandHealth(int choice){
+    public void getMonsterLandHealth(int choice){
         if (landManager.monsterLand.getHealth()<=0){
             System.out.println("-----WIN-----");
             choice = 0;
-            return choice;
-        } else
-            return choice;
+        }
     }
 }
