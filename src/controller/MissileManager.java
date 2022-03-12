@@ -6,8 +6,7 @@ import storage.MissileData;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 public class MissileManager  {
     public static final int MAX_BUY_TM1_MISSILE = 7;
@@ -156,19 +155,19 @@ public class MissileManager  {
                     }
                 }
             } else
-                System.out.println("Không có tên lửa đó.");
+                System.out.println("-----Không có tên lửa đó.");
         }else {
-            System.out.println("Nạp đạn đã !!!");
+            System.out.println("-----Nạp đạn đã !!!");
         }
     }
     public void reloadLauncher(){
         try {
-            System.out.println("Dừng khoảng chừng là 3 giây...");
+            System.out.println("-----Dừng khoảng chừng là 3 giây...");
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("...OKE !!!");
+        System.out.println("-----...OKE !!!");
         missileLaunchers.clean();
     }
     public void missileFly(){

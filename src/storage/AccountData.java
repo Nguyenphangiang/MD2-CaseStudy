@@ -1,12 +1,14 @@
 package storage;
 
 import model.Account;
+import model.Rocket;
 
 import java.io.*;
 import java.util.ArrayList;
 
 public class AccountData implements IAccountData{
-
+    public static AccountData tool =new AccountData();
+    public static ArrayList<Account> saveFile = tool.readFile();
     public static final String ACCOUNT_DAT = "account.dat";
 
     @Override
@@ -20,7 +22,7 @@ public class AccountData implements IAccountData{
             ois.close();
             fis.close();
         } catch (FileNotFoundException e) {
-            System.err.println("Chờ tý tạo file.");
+            System.err.println("Loading Account Data...");
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

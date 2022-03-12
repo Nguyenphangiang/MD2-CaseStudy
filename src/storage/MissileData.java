@@ -23,7 +23,7 @@ public class MissileData implements IMissileData{
             ois.close();
             fis.close();
         } catch (FileNotFoundException e) {
-            System.err.println("Chờ tý tạo file.");
+            System.err.println("Loading Game Data.");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
