@@ -24,8 +24,6 @@ public class AccountManager {
         Scanner sc1 = new Scanner(System.in);
         System.out.println("Nhập mật khẩu muốn tạo: ");
         String password = sc1.nextLine();
-        System.out.println(validateAccount(accountName));
-        System.out.println(validatePassword(password));
         if (validateAccount(accountName) && validatePassword(password)){
             Account account = new Account(accountName,password);
             if (checkAccountName(account.getAccName())){
@@ -74,19 +72,22 @@ public class AccountManager {
         for (int i = 0; i < accountList.size(); i++) {
             if (accountList.get(i).getAccName().equals(accName)){
                 accountList.remove(i);
+                try {
+                    iAccountData.writeFile(accountList);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
             }
         }
     }
     private boolean checkAccountName(String name){
-        boolean check = false;
-        for (Account account : accountList) {
+                for (Account account : accountList) {
             if (account.getAccName().equals(name)) {
-                check = true;
+                return true;
             }
-            return check;
         }
-        return check;
+        return false;
     }
     private int getIndexAccountByName(String name){
         int index = -1;
@@ -94,7 +95,7 @@ public class AccountManager {
             if (accountList.get(i).getAccName().equals(name)){
                 index = i;
                 break;
-            }else return index;
+            }
         } return index;
     }
     private void changePassword(){
@@ -108,7 +109,12 @@ public class AccountManager {
             String newPassword = sc.nextLine();
             accountList.get(accountAdress).setPassword(newPassword);
             System.out.println("----- OKE!!!");
-            }else {
+            try {
+                iAccountData.writeFile(accountList);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else {
             System.out.println("----- Kiểm tra lại đi...");
         }
     }
@@ -159,7 +165,7 @@ public class AccountManager {
         Scanner sc3 = new Scanner(System.in);
         System.out.println("---- Nhập password: ");
         String inputPassword = sc3.nextLine();
-        if (checkUserAccount(ADMIN_ACCNAME) &&(checkUserPassword(ADMIN_ACCNAME))){
+        if (inputAccName.equals(ADMIN_ACCNAME) &&(inputPassword.equals(ADMIN_ACCNAME))){
             showAdminMenu();
         } else if (checkUserAccount(inputAccName) && checkUserPassword(inputPassword)){
             welcomeEntering(inputAccName);
@@ -168,11 +174,11 @@ public class AccountManager {
             showLoginMenu();
         }
     }
-
     private void showAdminMenu() {
         int choice;
-        Scanner sc = new Scanner(System.in);
-        System.out.println("""
+        do {
+            Scanner sc = new Scanner(System.in);
+            System.out.println("""
                     ______> WELCOME ADMIN <______
                     1. Thêm tài khoản.
                     2.Xóa tài khoản.
@@ -181,29 +187,32 @@ public class AccountManager {
                     5.Show all account.
                     0.Exit to login menu.
                     Chọn tính năng :""");
-        choice = sc.nextInt();
-        switch (choice){
-            case 1:
+            choice = sc.nextInt();
+            switch (choice){
+                case 1:
                     creatAccount();
+                    System.out.println("-----OKe-----");
                     break;
-            case 2:
+                case 2:
                     Scanner sc1 = new Scanner(System.in);
                     System.out.println("----- Xóa tài khoản : ");
                     String deleteAccountName = sc1.nextLine();
                     deleteAccount(deleteAccountName);
+                    System.out.println("-----OKe-----");
                     break;
-            case 3:
+                case 3:
                     changePassword();
                     break;
-            case 4:
+                case 4:
                     showUserPassword();
                     break;
-            case 5:
+                case 5:
                     showAllAcount(accountList);
                     break;
-            case 0:
+                case 0:
                     showLoginMenu();
                     break;
             }
+        }while (choice!=0);
     }
 }

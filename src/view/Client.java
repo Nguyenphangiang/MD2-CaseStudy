@@ -85,7 +85,7 @@ public class Client {
                 }
                 case 3 -> inputLogin = 0;
             }
-        } while (inputLogin == 0);
+        } while (inputLogin != 0);
     }
 
 
