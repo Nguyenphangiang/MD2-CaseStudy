@@ -1,5 +1,6 @@
 package view;
 
+import controller.AccountManager;
 import controller.MissileManager;
 import model.*;
 import storage.MissileData;
@@ -8,11 +9,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Client {
-
+    private static AccountManager accountManager = new AccountManager();
     private static MissileManager missileManager = new MissileManager();
     private static ArrayList<Rocket> missileClient = MissileManager.rocketList;
-
-
 
     public static void main(String[] args) {
         TacticalMissile missile1 = new TacticalMissile("TM-1","Russia",150,2,100);
@@ -24,6 +23,28 @@ public class Client {
         if(missileClient.size() == 0){
             missileClient.add(missile1); missileClient.add(missile2);missileClient.add(missile3);missileClient.add(missile4);
         }
+        Scanner accInput = new Scanner(System.in);
+        System.out.println("""
+                -------------------------------------------------
+                |         => .WELCOME. TO LOGIN MENU.<=         |
+                |1. Tạo tài khoản mới.                          | 
+                |2. Đã có tài khoản.                            |
+                =================================================
+                """);
+        int inputLogin = accInput.nextInt();
+        switch (inputLogin){
+            case 1 :
+                accountManager.creatAccount();
+                break;
+        }
+
+
+
+
+
+
+
+
         int choice;
         do {
             Scanner scanner = new Scanner(System.in);

@@ -36,7 +36,7 @@ public class BallisticMissile extends Rocket{
     @Override
     public String toString() {
         return "BallisticMissile{" + super.toString() +
-                "power=" + power + "avoid radar = false" +
+                "power=" + power + " avoid radar = false" +
                 '}';
     }
 }

@@ -10,7 +10,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MissileManager  {
-    public static final String MAX_MISSILE_QUANTITY = "[1-5]";
     public static final int MAX_BUY_TM1_MISSILE = 7;
     public static final int MAX_BUY_TM2_MISSILE = 6;
     public static final int MAX_BUY_BM1_MISSILE = 11;
@@ -249,6 +248,7 @@ public class MissileManager  {
         if (critical == 0){
             missileFactory.setFactoryTreasury(missileFactory.getFactoryTreasury()-(checkPower(rocket)*2));
             landManager.humanLand.setHealth(landManager.humanLand.getHealth()-(checkPower(rocket)*2));
+            System.out.println("-----CRITICAL x2 DAMAGE-----");
         } else {
             missileFactory.setFactoryTreasury(missileFactory.getFactoryTreasury()-checkPower(rocket));
             landManager.humanLand.setHealth(landManager.humanLand.getHealth()-checkPower(rocket));
